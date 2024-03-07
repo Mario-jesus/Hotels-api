@@ -4,8 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+django = "*"
+django-cors-headers = "*"
+djangorestframework = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.12"
+
+[scripts]
+startapp = python manage.py startapp
+sever = python manage.py runserver
+makemigrations = manage.py makemigrations
+migrate = python manage.py migrate
+createsuperuser = python manage.py createsuperuser
