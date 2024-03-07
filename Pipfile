@@ -14,8 +14,8 @@ djangorestframework = "*"
 python_version = "3.12"
 
 [scripts]
-startapp = python manage.py startapp
-sever = python manage.py runserver
-makemigrations = manage.py makemigrations
-migrate = python manage.py migrate
-createsuperuser = python manage.py createsuperuser
+startapp = "python manage.py startapp"
+server = "python manage.py runserver"
+makemigrations = "manage.py makemigrations"
+migrate = "python manage.py migrate"
+createsuperuser = "python manage.py createsuperuser"
