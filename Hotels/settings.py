@@ -133,4 +133,19 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
+
+# Media
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Custom user model
+AUTH_USER_MODEL = "authentication.CustomUser"
+
+
+# Cors headers
+CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:5500"]
+CORS_ALLOW_CREDENTIALS = True
