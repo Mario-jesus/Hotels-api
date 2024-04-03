@@ -27,6 +27,14 @@ load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+# STRIPE CONFIGURATIONS
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
+CURRENCY_CODE = "MXN"
+PAYMENT_INTENT_SETUP_FUTURE_USED = "off_session"
+APPLICATION_FEE_AMOUNT = 0.1
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
 
@@ -49,6 +57,9 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     # Django custom apps
     'authentication',
+    'administrator',
+    'Hotel',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -135,7 +146,6 @@ STATIC_URL = 'static/'
 
 
 # Media
-
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
 
@@ -146,6 +156,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "authentication.CustomUser"
 
 
-# Cors headers
-CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:5500"]
+# Configuración de las sesiones
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_NAME = 'sessionid'
+SESSION_SAVE_EVERY_REQUEST = True
+
+# CORS HEADERS
+CORS_ORIGIN_WHITELIST = []
 CORS_ALLOW_CREDENTIALS = True
+
+# CSRF
+CSRF_TRUSTED_ORIGINS = []
+
+if DEBUG:
+    CORS_ORIGIN_WHITELIST.append("http://127.0.0.1:5500")
+    CSRF_TRUSTED_ORIGINS.append("http://127.0.0.1:5500")
+
+# CRONJOBS
+CRONJOBS = [
+    ('59 23 * * *', 'payments.cron.verify_expiration_reservations'),
+]

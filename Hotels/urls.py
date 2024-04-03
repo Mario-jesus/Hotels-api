@@ -19,17 +19,25 @@ from django.urls import path, include
 from rest_framework import routers
 from django.conf import settings
 from django.conf.urls.static import static
+from Hotel.views import HotelViewSet, ServicesHotelViewSet, ImageViewSet, RoomTypeViewSet
 
 
 # Api router
 router = routers.DefaultRouter()
+router.register(r"hotels", HotelViewSet)
+router.register(r"hotel_services", ServicesHotelViewSet)
+router.register(r"hotel_images", ImageViewSet)
+router.register(r"hotel_room-type", RoomTypeViewSet)
 
 urlpatterns = [
     # Admin routes
     path('admin/', admin.site.urls),
     # Api routes
-    path("api/", include("authentication.urls")),
-    path("api/", include(router.urls)),
+    path("api/v1/", include("authentication.urls")),
+    path("api/v1/", include("administrator.urls")),
+    path("api/v1/", include(router.urls)),
+    path("api/v1/", include("Hotel.urls")),
+    path("api/v1/", include("payments.urls")),
 ]
 
 # Server static files in development server

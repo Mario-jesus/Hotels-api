@@ -10,6 +10,8 @@ djangorestframework = "*"
 django-rest-passwordreset = "*"
 python-dotenv = "*"
 pillow = "*"
+stripe = "*"
+django-crontab = "*"
 
 [dev-packages]
 
