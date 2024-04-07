@@ -116,8 +116,8 @@ class Image(models.Model):
 
     category = models.ForeignKey(ImageCategory, on_delete=models.PROTECT, verbose_name="Categorías")
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name="images")
-    image = models.ImageField(upload_to=path_to_images, verbose_name="Imagen", null=False, blank=False)
-    description = models.TextField(verbose_name="Descripción")
+    image = models.ImageField(upload_to=path_to_images, verbose_name="Imagen")
+    description = models.TextField(verbose_name="Descripción", null=False, blank=False)
 
     class Meta:
         verbose_name = "Imagen"
