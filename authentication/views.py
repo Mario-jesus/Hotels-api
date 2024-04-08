@@ -3,10 +3,19 @@ from django.dispatch import receiver
 from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from django_rest_passwordreset.signals import reset_password_token_created
 from .serializers import UserSerializer
 
 # Create your views here.
+class UserDetailView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
+
 class LoginView(APIView):
     def post(self, request):
         email = request.data.get("email", None)
