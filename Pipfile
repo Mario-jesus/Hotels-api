@@ -12,6 +12,7 @@ python-dotenv = "*"
 pillow = "*"
 stripe = "*"
 django-crontab = "*"
+drf-extra-fields = "*"
 
 [dev-packages]
 

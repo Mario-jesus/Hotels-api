@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from administrator.serializers import ServicesSerializer, ImageCategorySerializer
+from drf_extra_fields.fields import Base64ImageField
 from .models import *
 
 
@@ -11,6 +12,7 @@ class ServicesHotelSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    image = Base64ImageField(required=True)
 
     class Meta:
         model = Image
@@ -56,14 +58,14 @@ class HotelSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = ServicesHotel
-            fields = ('price', 'description', 'service')
+            fields = ('id', 'price', 'description', 'service')
 
     class NestedImageSerializer(serializers.ModelSerializer):
         category = ImageCategorySerializer(read_only=True)
 
         class Meta:
             model = Image
-            fields = ('image', 'description', 'category')
+            fields = ('id', 'image', 'description', 'category')
 
     coordinates = CoordinateSerializer()
     services = NestedServicesHotelSerializer(read_only=True, many=True)

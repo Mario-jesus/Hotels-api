@@ -40,8 +40,8 @@ class Hotel(models.Model):
 
 class LocationCoordinates(models.Model):
     hotel = models.OneToOneField(Hotel, on_delete=models.CASCADE, related_name="coordinates", editable=False)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, validators=[MinValueValidator(-90), MaxValueValidator(90)], verbose_name="Latitud")
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, validators=[MinValueValidator(-180), MaxValueValidator(180)], verbose_name="Longitud")
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, validators=[MinValueValidator(Decimal("-90")), MaxValueValidator(Decimal("90"))], verbose_name="Latitud")
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, validators=[MinValueValidator(Decimal("-180")), MaxValueValidator(Decimal("180"))], verbose_name="Longitud")
 
     class Meta:
         verbose_name = "coordenadas de la ubicación"
@@ -96,6 +96,7 @@ class RoomType(models.Model):
 
 
 class ServicesHotel(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     service = models.ForeignKey(Services, on_delete=models.PROTECT, editable=True)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='services', editable=True)
     price = models.DecimalField(max_digits=8, decimal_places=2, validators=[MinValueValidator(Decimal("0.01"))], blank=True, null=True, verbose_name="Precio")
@@ -112,12 +113,13 @@ class ServicesHotel(models.Model):
 class Image(models.Model):
 
     def path_to_images(instance, filename):
-        return f"Images/{instance.hotel.id}/{filename}"
+        return f"images/{instance.hotel.id}/{filename}"
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     category = models.ForeignKey(ImageCategory, on_delete=models.PROTECT, verbose_name="Categorías")
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to=path_to_images, verbose_name="Imagen")
-    description = models.TextField(verbose_name="Descripción", null=False, blank=False)
+    description = models.TextField(verbose_name="Descripción", null=True, blank=True)
 
     class Meta:
         verbose_name = "Imagen"

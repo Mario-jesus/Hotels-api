@@ -5,8 +5,7 @@ from django.contrib.auth.hashers import make_password
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
     username = serializers.CharField(required=True)
-    password = serializers.CharField(min_length=8, write_only=True)
-    avatar = serializers.ImageField(required=False, allow_null=True)
+    password = serializers.CharField(min_length=8, write_only=True, required=True)
     is_hotelier = serializers.BooleanField(required=True)
 
     def validate_password(self, value):
@@ -14,4 +13,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ("email", "username", "password", "avatar", "is_hotelier")
+        fields = ("email", "username", "password", "is_hotelier")

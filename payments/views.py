@@ -310,7 +310,7 @@ class AccountLinkGenerationViewSet(viewsets.ViewSet):
         except Exception as err:
             return Response({"detail": str(err)}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({'link': link})
+        return Response({'link': link.url})
     
     def generate_dashboard_stripe_link(self, request, *args, **kwargs):
         try:

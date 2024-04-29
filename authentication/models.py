@@ -16,7 +16,6 @@ def path_to_avatar(instance, filename):
 class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(max_length=150, unique=True)
-    avatar = models.ImageField(upload_to=path_to_avatar, null=True, blank=True)
     is_customer = models.BooleanField(default=True)
     is_hotelier = models.BooleanField(default=False)
 
