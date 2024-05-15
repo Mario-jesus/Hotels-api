@@ -58,3 +58,18 @@ class ReservationSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+class ReservationReadOnlySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Reservation
+        fields = "__all__"
+
+    class NestedRoomReservationSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = RoomReservation
+            fields = "__all__"
+
+    bedrooms = NestedRoomReservationSerializer(many=True, read_only=True)

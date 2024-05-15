@@ -2,6 +2,7 @@ from django.conf import settings
 from django.utils import timezone
 from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from authentication.models import get_or_create_customer, get_or_create_connect_account
 from Hotel.models import RoomType, Hotel
 from Hotel.views import IsHotelier
@@ -240,6 +241,38 @@ class ReservationViewSet(viewsets.ViewSet):
             return Response({"detail": str(err)}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({"clientSecret": intent.client_secret})
+
+
+class ReservationReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationReadOnlySerializer
+    permission_classes = (IsCustomer, IsHotelier)
+    pagination_class = PageNumberPagination
+    pagination_class.page_size = 9
+
+    def get_queryset(self):
+        if self.request.user.is_hotelier:
+            hotels = Hotel.objects.filter(hotelier=self.request.user.id)
+            return Reservation.objects.filter(hotel__in=hotels)
+        else:
+            return Reservation.objects.filter(customer=self.request.user.id)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        page = self.paginate_queryset(queryset)   # Aplica la paginación
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        return Response(serializer.data)
+    
+    def retrieve(self, request, pk, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        queryset = queryset.filter(id=pk)
+        serializer = self.get_serializer(queryset, many=True)
+
+        return Response(serializer.data)
 
 
 class PaymentEventViewSet(viewsets.ViewSet):

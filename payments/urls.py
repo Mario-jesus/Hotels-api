@@ -5,6 +5,8 @@ urlpatterns = [
     path("room_availability/", ReservationViewSet.as_view({"get": "check_if_a_room_is_available"})),
     path("reservations/new_card/", ReservationViewSet.as_view({"post": "payment_with_new_card"})),
     path("reservations/saved_card/", ReservationViewSet.as_view({"post": "payment_with_saved_card"})),
+    path("reservations/", ReservationReadOnlyViewSet.as_view({"get": "list"})),
+    path("reservations/<slug:pk>/", ReservationReadOnlyViewSet.as_view({"get": "retrieve"})),
     path("cards/", CardsViewSet.as_view({
         "post": "create",
         "get": "list",

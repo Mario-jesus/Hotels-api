@@ -1,8 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext as _
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, status, filters
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.pagination import PageNumberPagination
 from authentication.models import Hotelier
 from .serializers import *
 from .models import *
@@ -62,6 +63,12 @@ class HotelViewSet(viewsets.ModelViewSet):
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
     permission_classes = (IsHotelier,)
+    pagination_class = PageNumberPagination
+    pagination_class.page_size = 9
+
+    filter_backends = [filters.SearchFilter]
+
+    search_fields = ['name', 'city', 'state']
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
