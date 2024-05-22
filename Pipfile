@@ -13,6 +13,7 @@ pillow = "*"
 stripe = "*"
 django-crontab = "*"
 drf-extra-fields = "*"
+django-filter = "*"
 
 [dev-packages]
 

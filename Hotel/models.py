@@ -8,9 +8,14 @@ import uuid
 
 # Create your models here.
 class Hotel(models.Model):
+
+    def path_to_images(instance, filename):
+        return f"images/{instance.id}/{filename}"
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     hotelier = models.ForeignKey(Hotelier, on_delete=models.CASCADE, related_name="hotels", editable=False)
     name = models.CharField(max_length=100, verbose_name="Nombre del hotel")
+    image = models.ImageField(upload_to=path_to_images, verbose_name="Imagen", null=False, blank=False)
     description = models.TextField(verbose_name="Descripción")
     phone = models.CharField(max_length=20, verbose_name='Teléfono')
     address = models.TextField(verbose_name="Dirección")

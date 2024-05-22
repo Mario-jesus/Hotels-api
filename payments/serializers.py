@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from Hotel.models import Hotel, RoomType
 
 
 class ReservationSerializer(serializers.ModelSerializer):
@@ -72,4 +73,19 @@ class ReservationReadOnlySerializer(serializers.ModelSerializer):
             model = RoomReservation
             fields = "__all__"
 
-    bedrooms = NestedRoomReservationSerializer(many=True, read_only=True)
+        class NestedRoomType(serializers.ModelSerializer):
+
+            class Meta:
+                model = RoomType
+                fields = ("id", "type")
+
+        room_type = NestedRoomType()
+
+    class NestedHotelserializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Hotel
+            fields = ("id", "name", "image")
+
+    bedrooms = NestedRoomReservationSerializer(many=True)
+    hotel = NestedHotelserializer()

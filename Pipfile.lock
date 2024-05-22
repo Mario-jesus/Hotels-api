@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "93007c2587df8d41dc092c6621c82c80b58c8e16a7589d078ab92e0b93bbe2e4"
+            "sha256": "da13a02971b2856723e01c3cbc515446303b07cf90ad1036c04ebedb7ff2da39"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -130,12 +130,12 @@
         },
         "django": {
             "hashes": [
-                "sha256:4bd01a8c830bb77a8a3b0e7d8b25b887e536ad17a81ba2dce5476135c73312bd",
-                "sha256:916423499d75d62da7aa038d19aef23d23498d8df229775eb0a6309ee1013775"
+                "sha256:8363ac062bb4ef7c3f12d078f6fa5d154031d129a15170a1066412af49d30905",
+                "sha256:ff1b61005004e476e0aeea47c7f79b85864c70124030e95146315396f1e7951f"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.10'",
-            "version": "==5.0.4"
+            "version": "==5.0.6"
         },
         "django-cors-headers": {
             "hashes": [
@@ -152,6 +152,15 @@
             ],
             "index": "pypi",
             "version": "==0.7.1"
+        },
+        "django-filter": {
+            "hashes": [
+                "sha256:48e5fc1da3ccd6ca0d5f9bb550973518ce977a4edde9d2a8a154a7f4f0b9f96e",
+                "sha256:df2ee9857e18d38bed203c8745f62a803fa0f31688c9fe6f8e868120b1848e48"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==24.2"
         },
         "django-rest-passwordreset": {
             "hashes": [
@@ -297,12 +306,12 @@
         },
         "stripe": {
             "hashes": [
-                "sha256:5b2da83222f564fccd16a5a0a9c98ba59c1a3090e5244c7152b208462a436048",
-                "sha256:5cbba304ff54e1a6daf8d5fb9a4390a387891e8a720129de4b86fb0328a6df50"
+                "sha256:9305d849cea715dc59c5e39d01891475b82e10edb9d95ee1d8189457e5de792f",
+                "sha256:f519f6810ac7f6e096b4faf562c44b1f8e365138441548e4ab0bc93f86368ad7"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.6'",
-            "version": "==9.3.0"
+            "version": "==9.6.0"
         },
         "typing-extensions": {
             "hashes": [

@@ -24,6 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load environment variables from .env file
 load_dotenv()
 
+# URL Front-End
+HOSTFRONTEND = os.getenv('HOSTFRONTEND')
+URLFRONTEND = f"http://{HOSTFRONTEND}:5500"
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
@@ -38,7 +43,7 @@ APPLICATION_FEE_AMOUNT = 0.1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", HOSTFRONTEND]
 
 
 # Application definition
@@ -55,6 +60,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_rest_passwordreset',
+    'django_filters',
     # Django custom apps
     'authentication',
     'administrator',
@@ -169,8 +175,8 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = []
 
 if DEBUG:
-    CORS_ORIGIN_WHITELIST.append("http://127.0.0.1:5500")
-    CSRF_TRUSTED_ORIGINS.append("http://127.0.0.1:5500")
+    CORS_ORIGIN_WHITELIST.append(URLFRONTEND)
+    CSRF_TRUSTED_ORIGINS.append(URLFRONTEND)
 
 # CRONJOBS
 CRONJOBS = [

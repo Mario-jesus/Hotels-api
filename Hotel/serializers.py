@@ -34,6 +34,7 @@ class CoordinateSerializer(serializers.ModelSerializer):
 
 
 class HotelSerializer(serializers.ModelSerializer):
+    image = Base64ImageField(required=True)
 
     class Meta:
         model = Hotel
@@ -41,6 +42,7 @@ class HotelSerializer(serializers.ModelSerializer):
             'id',
             'hotelier',
             'name',
+            'image',
             'description',
             'phone',
             'address',

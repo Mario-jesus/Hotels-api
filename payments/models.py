@@ -35,15 +35,13 @@ class Reservation(models.Model):
         if self.checkout and self.checkin > self.checkout:
             raise ValidationError({'checkin': _('The arrival date must be before the departure date.')})
 
+    class Meta:
+        verbose_name = "Reservación"
+        verbose_name_plural = "Reservaciones"
+        ordering = ["-create_at"]
+
 
 class RoomReservation(models.Model):
-    RESERVATION_STATUS = (
-        ('RE', _('Reserved')),
-        ('EX', _('Expired')),
-        ('CA', _('Cancelled')),
-        ('RF', _('Refunded')),
-        ('FA', _('Failed')),
-    )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer_reservation = models.ForeignKey(

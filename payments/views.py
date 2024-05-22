@@ -3,6 +3,7 @@ from django.utils import timezone
 from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
 from authentication.models import get_or_create_customer, get_or_create_connect_account
 from Hotel.models import RoomType, Hotel
 from Hotel.views import IsHotelier
@@ -249,6 +250,12 @@ class ReservationReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (IsCustomer, IsHotelier)
     pagination_class = PageNumberPagination
     pagination_class.page_size = 9
+
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = {
+        "status": ["exact"]
+    }
 
     def get_queryset(self):
         if self.request.user.is_hotelier:
