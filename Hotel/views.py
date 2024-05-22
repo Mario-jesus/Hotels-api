@@ -81,6 +81,29 @@ class HotelViewSet(viewsets.ModelViewSet):
         serializer.save(hotelier=Hotelier.objects.get(user_id=hotelier_id))
 
 
+class AllHotelsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Hotel.objects.all()
+    serializer_class = HotelSerializer
+    permission_classes = (IsHotelier,)
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            if self.request.user.is_hotelier:
+                return Hotel.objects.filter(hotelier_id=self.request.user.hoteliers.user_id)
+        return super().get_queryset()
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+
+        return Response(serializer.data)
+
+
 class CoordinateViewSet(viewsets.ModelViewSet):
     queryset = LocationCoordinates.objects.all()
     serializer_class = CoordinateSerializer
